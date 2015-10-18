@@ -1,8 +1,5 @@
 (fp_lib_table
   (lib (name LEDs)(type KiCad)(uri D:\Libs\Kicad\LEDs.pretty)(options "")(descr ""))
-  (lib (name PCB)(type KiCad)(uri D:\Libs\Kicad\PCB.pretty)(options "")(descr ""))
   (lib (name QFN_DFN)(type KiCad)(uri D:\Libs\Kicad\QFN_DFN.pretty)(options "")(descr ""))
-  (lib (name Common_kl)(type Legacy)(uri D:\Libs\Kicad\Common_kl.mod)(options "")(descr ""))
-  (lib (name Connectors_kl)(type Legacy)(uri D:\Libs\Kicad\Connectors_kl.mod)(options "")(descr ""))
   (lib (name SOT)(type KiCad)(uri D:\Libs\Kicad\SOT.pretty)(options "")(descr ""))
 )

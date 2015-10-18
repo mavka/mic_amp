@@ -1,0 +1,157 @@
+Cmp-Mod V01 Created by CvPcb (2013-07-07 BZR 4022)-stable date = 16.10.2015 19:11:30
+
+BeginCmp
+TimeStamp = /561FEE7E;
+Reference = C1;
+ValeurCmp = 10n;
+IdModule  = CAP_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /561FEF35;
+Reference = C2;
+ValeurCmp = 1u;
+IdModule  = CAP_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /56181A15;
+Reference = C3;
+ValeurCmp = 0.47u;
+IdModule  = CAP_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /56181B2A;
+Reference = C4;
+ValeurCmp = 0.1u;
+IdModule  = CAP_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /56181829;
+Reference = C5;
+ValeurCmp = 47nF;
+IdModule  = CAP_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /561FF1F0;
+Reference = C6;
+ValeurCmp = 0.1u;
+IdModule  = CAP_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /561817CA;
+Reference = C7;
+ValeurCmp = 2.2u;
+IdModule  = CAP_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /56180D05;
+Reference = C8;
+ValeurCmp = 1u;
+IdModule  = CAP_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /561FF8E4;
+Reference = C9;
+ValeurCmp = 1u;
+IdModule  = CAP_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /56180C1D;
+Reference = D1;
+ValeurCmp = MAX9814;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /561FF078;
+Reference = DA1;
+ValeurCmp = NCP662SQ;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /561FE4E5;
+Reference = F1;
+ValeurCmp = Fuse0R;
+IdModule  = SMD0603_FUSE;
+EndCmp
+
+BeginCmp
+TimeStamp = /561FE58C;
+Reference = F2;
+ValeurCmp = Fuse0R;
+IdModule  = SMD0603_FUSE;
+EndCmp
+
+BeginCmp
+TimeStamp = /561FE5C3;
+Reference = F3;
+ValeurCmp = Fuse0R;
+IdModule  = SMD0603_FUSE;
+EndCmp
+
+BeginCmp
+TimeStamp = /561FEECF;
+Reference = R1;
+ValeurCmp = 1M;
+IdModule  = RES_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /56181AF8;
+Reference = R2;
+ValeurCmp = 2k;
+IdModule  = RES_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /56180E02;
+Reference = R3;
+ValeurCmp = 150k;
+IdModule  = RES_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /56180DF3;
+Reference = R4;
+ValeurCmp = 100k;
+IdModule  = RES_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /561FE8E4;
+Reference = R5;
+ValeurCmp = 20k;
+IdModule  = RES_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /561FED41;
+Reference = XL1;
+ValeurCmp = USB_MINI_B;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /561FDA89;
+Reference = XL2;
+ValeurCmp = CONN_AUDIO_SIMPLE;
+IdModule  = CONN_AUDIO_CKX3_5_30;
+EndCmp
+
+BeginCmp
+TimeStamp = /561FDAD6;
+Reference = XL3;
+ValeurCmp = CONN_AUDIO_SIMPLE;
+IdModule  = CONN_AUDIO_CKX3_5_30;
+EndCmp
+
+EndListe

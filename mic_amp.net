@@ -1,8 +1,8 @@
 (export (version D)
   (design
-    (source D:\Nute\HandyDevices\MicAmp\mic_amp.sch)
-    (date "18.10.2015 13:30:55")
-    (tool "Eeschema (2015-09-12 BZR 6185, Git 3076a5d)-product")
+    (source Z:/git/mic_amp/mic_amp.sch)
+    (date "18.10.2015 15:02:10")
+    (tool "Eeschema 4.0.0-rc1-stable")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
         (title)
@@ -17,6 +17,7 @@
   (components
     (comp (ref D1)
       (value MAX9814)
+      (footprint QFN_DFN:DFN14)
       (libsource (lib Audio_kl) (part MAX9814))
       (sheetpath (names /) (tstamps /))
       (tstamp 56180C1D))
@@ -175,14 +176,6 @@
         (pin (num 2) (name R_IN) (type passive))
         (pin (num 3) (name L_IN) (type passive))
         (pin (num H) (name ~) (type passive))))
-    (libpart (lib pcb_details) (part HOLE_METALLED)
-      (footprints
-        (fp HOLE*))
-      (fields
-        (field (name Reference) HOLE)
-        (field (name Value) HOLE_METALLED))
-      (pins
-        (pin (num H) (name ~) (type passive))))
     (libpart (lib Connectors_kl) (part USB_MINI_B)
       (footprints
         (fp USB*))
@@ -196,6 +189,14 @@
         (pin (num 4) (name UGND) (type power_out))
         (pin (num 5) (name UID) (type passive))
         (pin (num SHLD) (name ~) (type input))))
+    (libpart (lib pcb_details) (part HOLE_METALLED)
+      (footprints
+        (fp HOLE*))
+      (fields
+        (field (name Reference) HOLE)
+        (field (name Value) HOLE_METALLED))
+      (pins
+        (pin (num H) (name ~) (type passive))))
     (libpart (lib Power_kl) (part NCP662SQ)
       (description "LDO 2.5uA Iq, 100mA out, 6V in")
       (footprints
@@ -219,15 +220,6 @@
       (pins
         (pin (num 1) (name ~) (type passive))
         (pin (num 2) (name ~) (type passive))))
-    (libpart (lib Tittar_kl) (part LED)
-      (footprints
-        (fp LED*))
-      (fields
-        (field (name Reference) D)
-        (field (name Value) LED))
-      (pins
-        (pin (num A) (name A) (type passive))
-        (pin (num C) (name C) (type passive))))
     (libpart (lib Tittar_kl) (part Fuse0R)
       (footprints
         (fp SMD*))
@@ -237,6 +229,15 @@
       (pins
         (pin (num 1) (name ~) (type passive))
         (pin (num 2) (name ~) (type passive))))
+    (libpart (lib Tittar_kl) (part LED)
+      (footprints
+        (fp LED*))
+      (fields
+        (field (name Reference) D)
+        (field (name Value) LED))
+      (pins
+        (pin (num A) (name A) (type passive))
+        (pin (num C) (name C) (type passive))))
     (libpart (lib Tittar_kl) (part R)
       (description Resistor)
       (footprints
@@ -248,6 +249,14 @@
       (pins
         (pin (num 1) (name ~) (type passive))
         (pin (num 2) (name ~) (type passive))))
+    (libpart (lib Tittar_kl) (part RVar)
+      (fields
+        (field (name Reference) R)
+        (field (name Value) RVar))
+      (pins
+        (pin (num 1) (name ~) (type passive))
+        (pin (num 2) (name ~) (type passive))
+        (pin (num 3) (name ~) (type passive))))
     (libpart (lib Audio_kl) (part MAX9814)
       (fields
         (field (name Reference) D)
@@ -267,15 +276,7 @@
         (pin (num 12) (name BIAS) (type input))
         (pin (num 13) (name MICBIAS) (type input))
         (pin (num 14) (name TH) (type input))
-        (pin (num PAD) (name GND) (type power_in))))
-    (libpart (lib Tittar_kl) (part RVar)
-      (fields
-        (field (name Reference) R)
-        (field (name Value) RVar))
-      (pins
-        (pin (num 1) (name ~) (type passive))
-        (pin (num 2) (name ~) (type passive))
-        (pin (num 3) (name ~) (type passive)))))
+        (pin (num PAD) (name GND) (type power_in)))))
   (libraries
     (library (logical Connectors_kl)
       (uri D:\Libs\Kicad\Connectors_kl.lib))
