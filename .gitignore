@@ -42,3 +42,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 mic_amp/.mic_amp.fsxview
+.mic_amp.fsxview
+mic_amp.dsn
+*.kicad_pcb-bak
+*.ses

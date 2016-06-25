@@ -1,4 +1,4 @@
-update=09.10.2015 21:55:05
+update=10.06.2016 1:37:54
 version=1
 last_client=eeschema
 [cvpcb]
@@ -37,17 +37,13 @@ version=1
 [eeschema]
 version=1
 LibDir=D:/Libs/Kicad
-NetFmtName=
-RptD_X=0
-RptD_Y=100
-RptLab=1
-LabSize=60
 [eeschema/libraries]
-LibName1=Connectors_kl
-LibName2=pcb_details
-LibName3=power
-LibName4=Power_kl
-LibName5=Tittar_kl
-LibName6=st_kl
-LibName7=Transistors_kl
-LibName8=Audio_kl
+LibName1=mic_amp-rescue
+LibName2=Connectors_kl
+LibName3=pcb_details
+LibName4=power
+LibName5=Power_kl
+LibName6=Tittar_kl
+LibName7=st_kl
+LibName8=Transistors_kl
+LibName9=Audio_kl

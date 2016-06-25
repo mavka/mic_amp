@@ -3,20 +3,15 @@
 	<Version current="1"/>
 	<Format>Project</Format>
 	<Header>
-		<Program name="TopoR" version="6.0"/>
-		<GUID>{E6750D85-17B3-4FD2-BBD1-E2ED1DD918A0}</GUID>
+		<Program name="TopoR" version="6.2"/>
+		<GUID>{B039518C-27BF-4C64-AF82-09E6984C2DE4}</GUID>
 		<Annotation>Project file</Annotation>
 	</Header>
 	<Document>
 		<LocalLibrary />
 		<Pcb>
-			<File path=".\mic_amp.fsx" Folder="-1" isopened="1"/>
+			<File path=".\mic_amp.fsx" isopened="0"/>
 		</Pcb>
-		<Import>
-			<Specctra>
-			<Path name="Z:\git\mic_amp\mic_amp.dsn"/>
-			</Specctra>
-		</Import>
 		<ARouteSessions>
 		</ARouteSessions>
 	</Document>
