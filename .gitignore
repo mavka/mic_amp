@@ -46,3 +46,5 @@ mic_amp/.mic_amp.fsxview
 mic_amp.dsn
 *.kicad_pcb-bak
 *.ses
+opamp.bak_CIR
+transistor.bak_CIR
