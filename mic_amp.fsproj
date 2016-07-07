@@ -4,14 +4,19 @@
 	<Format>Project</Format>
 	<Header>
 		<Program name="TopoR" version="6.2"/>
-		<GUID>{B039518C-27BF-4C64-AF82-09E6984C2DE4}</GUID>
+		<GUID>{DA2B88CD-C300-45D7-AB61-DA806945CCA5}</GUID>
 		<Annotation>Project file</Annotation>
 	</Header>
 	<Document>
 		<LocalLibrary />
 		<Pcb>
-			<File path=".\mic_amp.fsx" isopened="0"/>
+			<File path=".\mic_amp.fsx" isopened="1"/>
 		</Pcb>
+		<Import>
+			<Specctra>
+			<Path name="D:\Nute\Yandex\MicAmp\mic_amp.dsn"/>
+			</Specctra>
+		</Import>
 		<ARouteSessions>
 		</ARouteSessions>
 	</Document>
