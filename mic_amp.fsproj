@@ -10,7 +10,7 @@
 	<Document>
 		<LocalLibrary />
 		<Pcb>
-			<File path=".\mic_amp.fsx" isopened="1"/>
+			<File path=".\mic_amp.fsx" isopened="0"/>
 		</Pcb>
 		<Import>
 			<Specctra>
