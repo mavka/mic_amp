@@ -1,4 +1,4 @@
-update=10.06.2016 1:37:54
+update=29.08.2016 22:52:35
 version=1
 last_client=eeschema
 [cvpcb]
@@ -47,3 +47,4 @@ LibName6=Tittar_kl
 LibName7=st_kl
 LibName8=Transistors_kl
 LibName9=Audio_kl
+LibName10=DigitalPot
