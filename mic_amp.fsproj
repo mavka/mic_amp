@@ -4,13 +4,13 @@
 	<Format>Project</Format>
 	<Header>
 		<Program name="TopoR" version="6.2"/>
-		<GUID>{DA2B88CD-C300-45D7-AB61-DA806945CCA5}</GUID>
+		<GUID>{391216E8-A940-469E-8051-F12AB0618DBB}</GUID>
 		<Annotation>Project file</Annotation>
 	</Header>
 	<Document>
 		<LocalLibrary />
 		<Pcb>
-			<File path=".\mic_amp.fsx" isopened="0"/>
+			<File path=".\mic_amp.fsx" isopened="1"/>
 		</Pcb>
 		<Import>
 			<Specctra>
