@@ -20,7 +20,7 @@
 #define CRYSTAL_FREQ_HZ     12000000
 
 #define SYS_TIM_CLK         (Clk.APBFreqHz)
-#define ADC_REQUIRED        FALSE
+#define ADC_REQUIRED        TRUE
 
 #if 1 // ========================== GPIO =======================================
 // UART
@@ -35,9 +35,12 @@
 //#define LED_G_PIN       { GPIOB, 0, TIM3, 3, invInverted, omOpenDrain, 255 }
 //#define LED_B_PIN       { GPIOB, 5, TIM3, 2, invInverted, omOpenDrain, 255 }
 
-// Button
-//#define BTN_PIN         { GPIOA, 0, pudPullDown }
+// Buttons
+#define BTN_UP_PIN      GPIOA, 0, pudPullUp
+#define BTN_DOWN_PIN    GPIOA, 1, pudPullUp
 
+// Pwr pin
+#define PWR_PIN         GPIOA, 2, omPushPull
 #endif // GPIO
 
 #if 1 // ========================= Timer =======================================
@@ -56,9 +59,9 @@
 // ADC channels
 //#define BAT_CHNL 	        1
 
-#define ADC_VREFINT_CHNL    17  // All 4xx, F072 and L151 devices. Do not change.
-#define ADC_CHANNELS        { ADC_VREFINT_CHNL }
-#define ADC_CHANNEL_CNT     1   // Do not use countof(AdcChannels) as preprocessor does not know what is countof => cannot check
+#define ADC_VREFINT_CHNL    17  // All 4xx, F072/F030 and L151 devices. Do not change.
+#define ADC_CHANNELS        { 3, ADC_VREFINT_CHNL }
+#define ADC_CHANNEL_CNT     2   // Do not use countof(AdcChannels) as preprocessor does not know what is countof => cannot check
 #define ADC_SAMPLE_TIME     ast96Cycles
 #define ADC_SAMPLE_CNT      8   // How many times to measure every channel
 

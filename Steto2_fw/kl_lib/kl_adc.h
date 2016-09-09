@@ -30,7 +30,7 @@ enum AdcSampleTime_t {
 };
 
 // See datasheet, search VREFINT_CAL
-#ifdef STM32F072xB
+#if defined STM32F072xB || defined STM32F030
 #define ADC_VREFINT_CAL     (*(volatile uint16_t*)0x1FFFF7BA)
 #else
 #define ADC_VREFINT_CAL     (*(volatile uint16_t*)0x1FFF7A2A)	// for 4xx

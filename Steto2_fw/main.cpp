@@ -6,50 +6,18 @@
  */
 
 #include "main.h"
-//#include "SimpleSensors.h"
-//#include "buttons.h"
+#include "SimpleSensors.h"
+#include "buttons.h"
 #include "board.h"
 #include "led.h"
 //#include "Sequences.h"
-//#include "kl_adc.h"
+#include "kl_adc.h"
 
-#if 1 // ======================== Variables and defines ========================
 App_t App;
 
-// ==== Periphery ====
-#if BTN_ENABLED
-#define BTN_POLL_PERIOD_MS   27
-static void TmrBtnCallback(void *p);
+static TmrKL_t TmrPwrPoll {MS2ST(99), EVT_PWR_POLL, tktPeriodic};
+static const PinOutput_t PinPwr {PWR_PIN};
 
-class Btn_t {
-private:
-    virtual_timer_t Tmr;
-    bool IWasPressed = false;
-    PinInput_t Pin {BTN_PIN};
-public:
-    void Init() {
-        chVTSet(&Tmr, MS2ST(BTN_POLL_PERIOD_MS), TmrBtnCallback, nullptr);
-        Pin.Init();
-    }
-    void OnTmrTick() {}
-    void ITmrCallback() {
-        chSysLockFromISR();
-        if(Pin.IsHi() and !IWasPressed) {
-            IWasPressed = true;
-            App.SignalEvtI(EVT_BUTTON);
-        }
-        else if(!Pin.IsHi() and IWasPressed) IWasPressed = false;
-        chVTSetI(&Tmr, MS2ST(BTN_POLL_PERIOD_MS), TmrBtnCallback, nullptr);
-        chSysUnlockFromISR();
-    }
-} Btn;
-
-void TmrBtnCallback(void *p) { Btn.ITmrCallback(); }
-#endif
-
-// ==== Timers ====
-//static TmrKL_t TmrEverySecond {MS2ST(1000), EVT_EVERY_SECOND, tktPeriodic};
-#endif
 
 int main(void) {
     // ==== Init Vcore & clock system ====
@@ -61,15 +29,12 @@ int main(void) {
     App.InitThread();
 
     // ==== Init hardware ====
-    Uart.Init(115200, UART_GPIO, UART_TX_PIN, UART_GPIO, UART_RX_PIN);
+    Uart.Init(115200, UART_GPIO, UART_TX_PIN);//, UART_GPIO, UART_RX_PIN);
     Uart.Printf("\r%S %S\r", APP_NAME, BUILD_TIME);
-//    Uart.Printf("ID: %X %X %X\r", GetUniqID1(), GetUniqID2(), GetUniqID3());
-//    if(Sleep::WasInStandby()) {
-//        Uart.Printf("WasStandby\r");
-//        Sleep::ClearStandbyFlag();
-//    }
     Clk.PrintFreqs();
-//    RandomSeed(GetUniqID3());   // Init random algorythm with uniq ID
+
+    PinPwr.Init();
+    PinPwr.Hi();    // Keep power on
 
     // === LED ===
     PinSetupOut(GPIOA, 7, omPushPull);
@@ -78,10 +43,11 @@ int main(void) {
 //    Led.Init();
 //    Led.SetupSeqEndEvt(chThdGetSelfX(), EVT_LED_SEQ_END);
 
-//    Btn.Init();
-//    Adc.Init();
+    PinSensors.Init();
+    Adc.Init();
+    Adc.EnableVRef();
 
-//    TmrEverySecond.InitAndStart();
+    TmrPwrPoll.InitAndStart();
 
     // Main cycle
     App.ITask();
@@ -89,27 +55,53 @@ int main(void) {
 
 __noreturn
 void App_t::ITask() {
+    bool AdcFirstConv = true, PwrBtnWasPressed = false, FirstReleaseOccured = false;
     while(true) {
         __unused eventmask_t Evt = chEvtWaitAny(ALL_EVENTS);
-        if(Evt & EVT_EVERY_SECOND) {
-
+        if(Evt & EVT_PWR_POLL) {
+            Adc.StartMeasurement();
         }
 
-#if 0 // ==== Led sequence end ====
-        if(Evt & EVT_LED_SEQ_END) {
+#if 1 // Buttons
+        if(Evt & EVT_BUTTONS) {
+            BtnEvtInfo_t EInfo;
+            while(BtnGetEvt(&EInfo) == OK) {
+                if(EInfo.Type == bePress or EInfo.Type == beRepeat) {
+                    if(EInfo.BtnID == btnUp) {
+                        Uart.Printf("Up\r");
+                    }
+                    else if(EInfo.BtnID == btnDown) {
+                        Uart.Printf("Down\r");
+                    }
+                }
+            }
         }
 #endif
 
-#if BTN_ENABLED
-        if(Evt & EVT_BUTTON) {
-            if(Mode == modeBinding) Binding.ProcessEvt(bevtBtn);
-        }
-#endif
-
-#if 0 // ==== Vibro seq end ====
-        if(Evt & EVT_VIBRO_END) {
-            // Restart vibration (or start new one) if needed
-            if(pVibroSeqToPerform != nullptr) Vibro.StartSequence(pVibroSeqToPerform);
+#if ADC_REQUIRED
+        if(Evt & EVT_ADC_DONE) {
+            if(AdcFirstConv) AdcFirstConv = false;
+            else {
+                uint32_t VBtnAdc = Adc.GetResult(3);
+                uint32_t VRef = Adc.GetResult(ADC_VREFINT_CHNL);
+                uint32_t VBtn_mv = Adc.Adc2mV(VBtnAdc, VRef);
+    //            Uart.Printf("adc: %u; Vref: %u; VBtn: %u\r", VBtnAdc, VRef, VBtn_mv);
+                // Process btn press
+                bool PwrBtnIsPressed = (VBtn_mv > 2700);
+//                Uart.Printf("Pressed: %u; FR: %u; WP: %u\r", PwrBtnIsPressed, FirstReleaseOccured, PwrBtnWasPressed);
+                if(FirstReleaseOccured) {
+                    if(PwrBtnIsPressed and !PwrBtnWasPressed) {
+                        PwrBtnWasPressed = true;
+                    }
+                    else if(!PwrBtnIsPressed and PwrBtnWasPressed) {
+                        // switch off
+                        PinPwr.Lo();
+                    }
+                }
+                if(!PwrBtnIsPressed and !FirstReleaseOccured) {
+                    FirstReleaseOccured = true; // Do not react on first press / release
+                }
+            }
         }
 #endif
 

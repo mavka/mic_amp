@@ -264,7 +264,7 @@ static inline int Random(int LowInclusive, int HighInclusive) {
 static inline void RandomSeed(unsigned int Seed) { srand(Seed); }
 #endif
 
-#if 0 // =========================== Time ======================================
+#if 1 // =========================== Time ======================================
 static inline bool TimeElapsed(systime_t *PSince, uint32_t Delay_ms) {
     chSysLock();
     bool Rslt = (chVTGetSystemTimeX() - *PSince) > MS2ST(Delay_ms);

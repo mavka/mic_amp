@@ -18,7 +18,7 @@
 
 /*
  * Example:
-if(EvtMsk & EVTMSK_BUTTONS) {
+if(Evt & EVT_BUTTONS) {
     BtnEvtInfo_t EInfo;
     while(BtnGetEvt(&EInfo) == OK) {
         if(EInfo.Type == bePress) {
@@ -30,11 +30,11 @@ if(EvtMsk & EVTMSK_BUTTONS) {
     }
  */
 
-#define BUTTONS_CNT     1
+#define BUTTONS_CNT     2
 // Select required events. BtnPress is a must.
 #define BTN_RELEASE     FALSE
 #define BTN_LONGPRESS   FALSE   // Send LongPress evt
-#define BTN_REPEAT      FALSE   // Send Repeat evt
+#define BTN_REPEAT      TRUE    // Send Repeat evt
 #define BTN_COMBO       FALSE   // Allow combo
 
 #define BTN_REPEAT_PERIOD_MS        180
@@ -48,12 +48,12 @@ if(EvtMsk & EVTMSK_BUTTONS) {
 #endif
 
 // Select convenient names
-enum BtnName_t {btnSelect=0, btnPlus=1, btnMinus=2};
+enum BtnName_t {btnUp=0, btnDown=1};
 
 // Define correct button behavior depending on schematic
-#define BTN_PRESS_STATE         pssRising
-#define BTN_RELEASE_STATE       pssFalling
-#define BTN_HOLDDOWN_STATE      pssHi
+#define BTN_PRESS_STATE         pssFalling
+#define BTN_RELEASE_STATE       pssRising
+#define BTN_HOLDDOWN_STATE      pssLo
 
 // ==== Types ==== Do not touch
 // BtnEvent: contains info about event type, count of participating btns and array with btn IDs
@@ -62,9 +62,9 @@ struct BtnEvtInfo_t {
     BtnEvt_t Type;
 #if BTN_COMBO
     uint8_t BtnCnt;
-#endif
-#if BUTTONS_CNT != 1
     uint8_t BtnID[BUTTONS_CNT];
+#elif BUTTONS_CNT != 1
+    uint8_t BtnID;
 #endif
 } __packed;
 

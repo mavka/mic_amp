@@ -6,6 +6,7 @@
  */
 
 #include "SimpleSensors.h"
+#include "uart.h"
 
 #if SIMPLESENSORS_ENABLED
 
@@ -26,7 +27,7 @@ void SimpleSensors_t::Init() {
         States[i] = pssLo;
     }
     // Create and start thread
-    chThdCreateStatic(waPinSnsThread, sizeof(waPinSnsThread), (tprio_t)90, (tfunc_t)SensorsThread, NULL);
+    chThdCreateStatic(waPinSnsThread, sizeof(waPinSnsThread), NORMALPRIO, (tfunc_t)SensorsThread, NULL);
 }
 
 void PrintStackSz() {
@@ -50,7 +51,6 @@ void SimpleSensors_t::ITask() {
 //            PrintStackSz();
 ////            Uart.PrintfNow("%A\r", waPinSnsThread, DSZ, ' ');
 //        }
-
         chThdSleepMilliseconds(SNS_POLL_PERIOD_MS);
         ftVoidPSnsStLen PostProcessor = PinSns[0].Postprocessor;
         uint32_t GroupLen = 0;
