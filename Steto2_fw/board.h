@@ -30,10 +30,11 @@
 #define UART_AF         AF1 // for USART1 @ GPIOA
 
 // LED
-//#define LED_EN_PIN      { GPIOB, 2, omPushPull }
-//#define LED_R_PIN       { GPIOB, 1, TIM3, 4, invInverted, omOpenDrain, 255 }
-//#define LED_G_PIN       { GPIOB, 0, TIM3, 3, invInverted, omOpenDrain, 255 }
-//#define LED_B_PIN       { GPIOB, 5, TIM3, 2, invInverted, omOpenDrain, 255 }
+#define LED_PIN         GPIOA, 7, omPushPull
+
+// DigPot: UpDown & CS
+#define DPOT_UD_PIN     GPIOA, 4, omPushPull
+#define DPOT_CS_PIN     GPIOA, 5, omPushPull
 
 // Buttons
 #define BTN_UP_PIN      GPIOA, 0, pudPullUp

@@ -18,9 +18,50 @@ App_t App;
 static TmrKL_t TmrPwrPoll {MS2ST(99), EVT_PWR_POLL, tktPeriodic};
 static const PinOutput_t PinPwr {PWR_PIN};
 
+// Digital Potentiometer
+#define PinDelay()  {__NOP(); __NOP(); __NOP(); __NOP(); __NOP(); __NOP(); __NOP();}
+
+class DigPot_t {
+private:
+    const PinOutput_t UD {DPOT_UD_PIN};
+    const PinOutput_t CS {DPOT_CS_PIN};
+public:
+    void Init() const {
+        UD.Init();
+        CS.Init();
+        CS.Hi();
+    }
+    void MoveDown(uint32_t Cnt) const {
+        chSysLock();
+        UD.Lo(); PinDelay();
+        CS.Lo(); PinDelay();
+        while(Cnt != 0) {
+            UD.Lo(); PinDelay();
+            UD.Hi(); PinDelay();
+            Cnt--;
+        }
+        CS.Hi();
+        chSysUnlock();
+    }
+    void MoveUp(uint32_t Cnt) const {
+        chSysLock();
+        UD.Hi(); PinDelay();
+        CS.Lo(); PinDelay();
+        while(Cnt != 0) {
+            UD.Lo(); PinDelay();
+            UD.Hi(); PinDelay();
+            Cnt--;
+        }
+        CS.Hi();
+        chSysUnlock();
+    }
+};
+
+const DigPot_t DigPot;
 
 int main(void) {
     // ==== Init Vcore & clock system ====
+    Clk.SetupBusDividers(ahbDiv4, apbDiv1);
     Clk.UpdateFreqValues();
 
     // === Init OS ===
@@ -44,6 +85,7 @@ int main(void) {
 //    Led.SetupSeqEndEvt(chThdGetSelfX(), EVT_LED_SEQ_END);
 
     PinSensors.Init();
+    DigPot.Init();
     Adc.Init();
     Adc.EnableVRef();
 
@@ -69,9 +111,11 @@ void App_t::ITask() {
                 if(EInfo.Type == bePress or EInfo.Type == beRepeat) {
                     if(EInfo.BtnID == btnUp) {
                         Uart.Printf("Up\r");
+                        DigPot.MoveUp(8);
                     }
                     else if(EInfo.BtnID == btnDown) {
                         Uart.Printf("Down\r");
+                        DigPot.MoveDown(8);
                     }
                 }
             }
