@@ -188,7 +188,7 @@ const LedChunk_t lsqBlinkGreenX2[] = {
 };
 #endif
 
-#if 1 // ============================ LED RGB ==================================
+#if 0 // ============================ LED RGB ==================================
 const LedRGBChunk_t lsqStart[] = {
         {csSetup, 0, clRed},
         {csWait, 207},
@@ -267,29 +267,36 @@ const LedRGBChunk_t lsqFailure[] = {
 
 #endif
 
-#if 0 // =========================== LED Smooth ================================
+#if 1 // =========================== LED Smooth ================================
 #define LED_TOP_BRIGHTNESS  255
 
 const LedSmoothChunk_t lsqFadeIn[] = {
-        {csSetup, 630, LED_TOP_BRIGHTNESS},
+        {csSetup, 180, LED_TOP_BRIGHTNESS},
         {csEnd}
 };
+
+const LedSmoothChunk_t lsqDischarged[] = {
+        {csSetup, 90, 0},
+        {csSetup, 90, LED_TOP_BRIGHTNESS},
+        {csGoto, 0}
+};
+
 const LedSmoothChunk_t lsqFadeOut[] = {
-        {csSetup, 630, 0},
+        {csSetup, 180, 0},
         {csEnd}
 };
-const LedSmoothChunk_t lsqEnterActive[] = {
-        {csSetup, 0, LED_TOP_BRIGHTNESS},
-        {csEnd}
-};
-const LedSmoothChunk_t lsqEnterIdle[] = {
-        {csSetup, 360, 0},
-        {csEnd}
-};
+//const LedSmoothChunk_t lsqEnterActive[] = {
+//        {csSetup, 0, LED_TOP_BRIGHTNESS},
+//        {csEnd}
+//};
+//const LedSmoothChunk_t lsqEnterIdle[] = {
+//        {csSetup, 360, 0},
+//        {csEnd}
+//};
 
 #endif
 
-#if 1 // ============================= Beeper ==================================
+#if 0 // ============================= Beeper ==================================
 #define BEEP_VOLUME     2   // Maximum 10
 
 #if 1 // ==== Notes ====
@@ -378,7 +385,7 @@ const BeepChunk_t bsqBeepPillBad[] = {
 #endif // ext
 #endif // beeper
 
-#if 1 // ============================== Vibro ==================================
+#if 0 // ============================== Vibro ==================================
 #define VIBRO_VOLUME    100  // 1 to 100
 
 #define VIBRO_SHORT_MS          99

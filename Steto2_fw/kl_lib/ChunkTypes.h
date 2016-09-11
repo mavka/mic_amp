@@ -81,10 +81,12 @@ public:
         PThread = APThread;
         EvtEnd = AEvt;
     }
-    void StartSequence(const TChunk *PChunk) {
+    void StartSequence(const TChunk *PChunk, eventmask_t AEvt = 0, thread_t *APThread = nullptr) {
         if(PChunk == nullptr) Stop();
         else {
             chSysLock();
+            if(AEvt != 0) EvtEnd = AEvt;
+            if(APThread != nullptr) PThread = APThread;
             IPStartChunk = PChunk;   // Save first chunk
             IPCurrentChunk = PChunk;
             IProcessSequenceI();

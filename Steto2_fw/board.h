@@ -30,7 +30,7 @@
 #define UART_AF         AF1 // for USART1 @ GPIOA
 
 // LED
-#define LED_PIN         GPIOA, 7, omPushPull
+#define LED_PIN         { GPIOA, 7, TIM14, 1, invNotInverted, omPushPull, 255 }
 
 // DigPot: UpDown & CS
 #define DPOT_UD_PIN     GPIOA, 4, omPushPull
@@ -43,9 +43,6 @@
 // Pwr pin
 #define PWR_PIN         GPIOA, 2, omPushPull
 #endif // GPIO
-
-#if 1 // ========================= Timer =======================================
-#endif // Timer
 
 #if 1 // ========================== USART ======================================
 #define UART            USART1

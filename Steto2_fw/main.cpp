@@ -10,13 +10,14 @@
 #include "buttons.h"
 #include "board.h"
 #include "led.h"
-//#include "Sequences.h"
+#include "Sequences.h"
 #include "kl_adc.h"
 
 App_t App;
 
 static TmrKL_t TmrPwrPoll {MS2ST(99), EVT_PWR_POLL, tktPeriodic};
 static const PinOutput_t PinPwr {PWR_PIN};
+static LedSmooth_t Led {LED_PIN};
 
 // ==== Digital Potentiometer ====
 class DigPot_t {
@@ -100,12 +101,9 @@ int main(void) {
     PinPwr.Init();
     PinPwr.Hi();    // Keep power on
 
-    // === LED ===
-    PinSetupOut(GPIOA, 7, omPushPull);
-    PinSetHi(GPIOA, 7);
-
-//    Led.Init();
-//    Led.SetupSeqEndEvt(chThdGetSelfX(), EVT_LED_SEQ_END);
+    // LED
+    Led.Init();
+    Led.StartSequence(lsqFadeIn);
 
     PinSensors.Init();
     DigPot.Init();
@@ -121,6 +119,7 @@ int main(void) {
 __noreturn
 void App_t::ITask() {
     bool AdcFirstConv = true, PwrBtnWasPressed = false, FirstReleaseOccured = false;
+    bool WasDischarged = false;
     while(true) {
         __unused eventmask_t Evt = chEvtWaitAny(ALL_EVENTS);
         if(Evt & EVT_PWR_POLL) {
@@ -145,6 +144,13 @@ void App_t::ITask() {
         }
 #endif
 
+#if 1 // Led end
+        if(Evt & EVT_LED_SEQ_END) {
+            // switch off
+            PinPwr.Lo();
+        }
+#endif
+
 #if ADC_REQUIRED
         if(Evt & EVT_ADC_DONE) {
             if(AdcFirstConv) AdcFirstConv = false;
@@ -153,6 +159,11 @@ void App_t::ITask() {
                 uint32_t VRef = Adc.GetResult(ADC_VREFINT_CHNL);
                 uint32_t VBtn_mv = Adc.Adc2mV(VBtnAdc, VRef);
     //            Uart.Printf("adc: %u; Vref: %u; VBtn: %u\r", VBtnAdc, VRef, VBtn_mv);
+                // Check battery
+                if(VBtn_mv < 1150 and !WasDischarged) {
+                    WasDischarged = true;
+                    Led.StartSequence(lsqDischarged);
+                }
                 // Process btn press
                 bool PwrBtnIsPressed = (VBtn_mv > 2700);
 //                Uart.Printf("Pressed: %u; FR: %u; WP: %u\r", PwrBtnIsPressed, FirstReleaseOccured, PwrBtnWasPressed);
@@ -161,8 +172,10 @@ void App_t::ITask() {
                         PwrBtnWasPressed = true;
                     }
                     else if(!PwrBtnIsPressed and PwrBtnWasPressed) {
+                        PwrBtnWasPressed = false;
+                        Led.StartSequence(lsqFadeOut, EVT_LED_SEQ_END, chThdGetSelfX());
                         // switch off
-                        PinPwr.Lo();
+//                        PinPwr.Lo();
                     }
                 }
                 if(!PwrBtnIsPressed and !FirstReleaseOccured) {

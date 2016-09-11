@@ -37,13 +37,10 @@ public:
 #endif
 
 
-#if 0 // ======================== Single Led Smooth ============================
-#define LED_TOP_VALUE       255
-#define LED_INVERTED_PWM    invInverted
-
+#if 1 // ======================== Single Led Smooth ============================
 class LedSmooth_t : public BaseSequencer_t<LedSmoothChunk_t> {
 private:
-    PinOutputPWM_t<LED_TOP_VALUE, LED_INVERTED_PWM> IChnl;
+    const PinOutputPWM_t IChnl;
     uint8_t ICurrentBrightness;
     void ISwitchOff() { SetBrightness(0); }
     SequencerLoopTask_t ISetup() {
@@ -61,7 +58,7 @@ private:
                 if(ICurrentBrightness == IPCurrentChunk->Brightness) IPCurrentChunk++;
                 else { // Not completed
                     // Calculate time to next adjustment
-                    uint32_t Delay = ICalcDelay(ICurrentBrightness, IPCurrentChunk->Value);
+                    uint32_t Delay = ClrCalcDelay(ICurrentBrightness, IPCurrentChunk->Value);
                     SetupDelay(Delay);
                     return sltBreak;
                 } // Not completed
@@ -71,8 +68,8 @@ private:
         return sltProceed;
     }
 public:
-    LedSmooth_t(const PinOutputPWM_t<LED_TOP_VALUE, LED_INVERTED_PWM> AChnl) :
-        BaseSequencer_t(), IChnl(AChnl), ICurrentBrightness(0) {}
+    LedSmooth_t(const PwmSetup_t APinSetup) :
+        BaseSequencer_t(), IChnl(APinSetup), ICurrentBrightness(0) {}
     void Init() {
         IChnl.Init();
         SetBrightness(0);
