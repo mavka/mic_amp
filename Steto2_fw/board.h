@@ -37,8 +37,8 @@
 #define DPOT_CS_PIN     GPIOA, 5, omPushPull
 
 // Buttons
-#define BTN_UP_PIN      GPIOA, 0, pudPullUp
-#define BTN_DOWN_PIN    GPIOA, 1, pudPullUp
+#define BTN_UP_PIN      GPIOA, 1, pudPullUp
+#define BTN_DOWN_PIN    GPIOA, 0, pudPullUp
 
 // Pwr pin
 #define PWR_PIN         GPIOA, 2, omPushPull

@@ -146,6 +146,7 @@ void App_t::ITask() {
 
 #if 1 // Led end
         if(Evt & EVT_LED_SEQ_END) {
+            Uart.PrintfNow("Off\r");
             // switch off
             PinPwr.Lo();
         }
